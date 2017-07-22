@@ -1,0 +1,22 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width initial-scale=1"> 
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+        <!--Cargamos papaparse.js-->
+        <script src="js/papaparse.min.js"></script>
+    </head>
+    <body>
+        <div style="width: 700px;"> <!--Con esta opción fijamos el tamaño del gráfico (sin ella el gráfico se adapta al tamaño de la página)-->
+        <canvas id="lineChart" height="400" width="400"></canvas><!-- Aquí decidimos la proporción entre altura y anchura-->
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script> <!--Llamamos a la librería para poder acceder a distintos tipos de datos como serían los distintos tipos de gráficas-->
+        <script src="js/main1.js"></script> <!--Aquí indicamos el archivo de JavaScript de donde sacamos la info para el gráfico-->
+    </body>
+</html>
