@@ -17,6 +17,8 @@ function createGraph(data){
 		Time.push(data[i][0]);
 		Coronal.push(data[i][1]);
 	}
+    console.log(Coronal);
+    console.log(Time);
     console.log(Math.max.apply(null, Coronal));/*Aquí vemos el valor máximo de Coronal,
      y lo utilizaremos para hacer un gráfico de progreso donde existirán valores de normalidad*/
 	//console.log(Time);

@@ -4,10 +4,19 @@
 }
 
 header{
+	text-align: center;
 	width: 100%;
 	background: #f2f2f2;
 	box-shadow: 1px 1px 5px #000;
 	height: 50px;
+}
+
+html { 
+  background: url(imagenes/fondo.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 #menu{
@@ -33,6 +42,32 @@ header{
 	border-bottom: 9px solid #6e6e6e;
 }
 
+table, th, td{	
+				margin-left: auto;
+    			margin-right: auto;
+    			text-align: center;
+    			border-bottom: 1px solid #ddd;
+    			border-left: 1px solid #ddd;
+    			border-right: 1px solid #ddd;
+    			border-top: 1px solid #ddd;
+			}
+			.btn{
+    			height: 24px;
+    			width: 24px;
+    			transition-duration: 0.4s;
+    			cursor: pointer;
+    			background-color: white;
+    			color: black;
+    			border: transparent;
+    			border-radius: 4px;
+    			background-image:url('./grf.png');
+    			background-size:cover;
+			}
+			.btn:hover {
+    			background-color: #e7e7e7;
+    			color: white;
+			}
+
 footer{
     position:fixed;
     bottom:0;
@@ -41,6 +76,10 @@ footer{
 section{
 	font: 16px Verdana;
 }
+
+
+
+
 
 
 
