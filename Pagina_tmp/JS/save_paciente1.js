@@ -17,7 +17,7 @@ function save_paciente(nombre, apellido, sexo){
             for (var i=0; i<l; i++) arr[i] = str.charCodeAt(i);
             return arr;
         }
-
+        
         var dbstr = window.localStorage.getItem("./../Pacientes_DB.db");
         var db = new SQL.Database(toBinArray(dbstr));
 

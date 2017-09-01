@@ -11,13 +11,13 @@ header{
 	height: 50px;
 }
 
-html { 
+/*html { 
   background: url(imagenes/fondo.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
+}*/
 
 #menu{
 	width: 450px;
@@ -51,22 +51,41 @@ table, th, td{
     			border-right: 1px solid #ddd;
     			border-top: 1px solid #ddd;
 			}
-			.btn{
-    			height: 24px;
-    			width: 24px;
-    			transition-duration: 0.4s;
-    			cursor: pointer;
-    			background-color: white;
-    			color: black;
-    			border: transparent;
-    			border-radius: 4px;
-    			background-image:url('./grf.png');
-    			background-size:cover;
+.btn{
+    	height: 24px;
+  		width: 24px;
+    	transition-duration: 0.4s;
+    	cursor: pointer;
+    	background-color: white;
+    	color: black;
+    	border: transparent;
+    	border-radius: 4px;
+    	background-image:url('./imagenes/grf.png');
+    	background-size:cover;
 			}
-			.btn:hover {
-    			background-color: #e7e7e7;
-    			color: white;
+.btn:hover {
+    	background-color: #e7e7e7;
+    	color: white;
 			}
+.btn_borrar{
+		height: 24px;
+		width: 24px;
+		transition-duration: 0.4s;
+		cursor: pointer;
+		background-color: white;
+		color: black;
+		border: transparent;
+		border-radius: 4px;
+		background-image:url('./imagenes/borrar1.jpg');
+		background-size:cover;
+		}
+.btn_borrar:hover {
+    	background-color: #e7e7e7;
+    	color: red;
+		}
+div {
+margin:0 auto;
+}
 
 footer{
     position:fixed;

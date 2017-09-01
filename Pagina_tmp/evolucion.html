@@ -21,6 +21,7 @@
   				<tr>
     				<th colspan="3">Movimientos</th>
     				<th rowspan="2">Fecha y Hora</th> 
+            <td style="visibility:hidden;" width="30"></td>
   				</tr>
   				<tr>
   					<th>Coronal</th>
@@ -34,8 +35,11 @@
   			<input id="csv" type="file" accept=".csv"><br>
   			<p1 id="a2">Fecha:</p1><br>
   			<input type="datetime-local" id="miFecha"><br>
+        <script type="text/javascript" src="JS/socket.io.js"></script> 
   			<script src="js/papaparse.min.js"></script>
-  			<script src="JS/get_datos.js"></script>
+  			<script src="JS/evolucion_node.js"></script>
+        <script src="JS/sql.js"></script>
+        <script src="JS/Chart.js"></script> 
   			<button id="boton_x" type="button">Añadir datos</button>
   			<script type="text/javascript">
   				var Boton_pres = document.getElementById("boton_x");
@@ -69,9 +73,6 @@
   			<div style="width: 800px;" align="center"> 
         		<canvas id="lineChart" height="400" width="800"></canvas>
         	</div>
-		<script src="JS/sql.js"></script>
-		<script src="JS/get_datos.js"></script>
-		<script src="JS/Chart.js"></script>	
 		<script type="text/javascript">
 			var url = window.location.href;
 			var url1 = new URL(url);
@@ -92,7 +93,7 @@
 			else{
 				//Mostrar tabla con los distintos gráficos obtenidos y las fechas de medición
 				document.getElementById("paciente_info").innerHTML = "Paciente: "+nombre+" "+apellido;
-				get_datos(id, function(datos){
+				get_datos_node(id, function(datos){
 					if (datos.length==0){
 						document.getElementById("paciente_info_1").innerHTML = "Todavía no hay datos de movimieto disponibles para este paciente";
 					}
@@ -101,10 +102,11 @@
 						for(i=0; i<(datos[0].values.length); i++){
         					var filas = tabla.rows.length;
         					var fila = tabla.insertRow(filas);
-        					fila.insertCell(0).innerHTML = datos[0].values[i][5].substring(0,10)+" "+datos[0].values[i][5].substring(11,16);
-        					fila.insertCell(0).innerHTML = '<button class="btn" type="button" onClick="crearGrafico(\''+datos[0].values[i][0]+'\', \'' + datos[0].values[i][3] + '\',1)"></button>';
-        					fila.insertCell(0).innerHTML = '<button class="btn" type="button" onClick="crearGrafico(\''+datos[0].values[i][0]+'\', \'' + datos[0].values[i][2] + '\',2)"></button>';
-        					fila.insertCell(0).innerHTML = '<button class="btn" type="button" onClick="crearGrafico(\''+datos[0].values[i][0]+'\', \'' + datos[0].values[i][1] + '\',3)"></button>';
+                  fila.insertCell(0).innerHTML = '<button class="btn_borrar" type="button" onClick="borrar_datos('+id+')"></button>';
+        					fila.insertCell(0).innerHTML = datos[0].values[i][6].substring(0,10)+" "+datos[0].values[i][6].substring(11,16);
+        					fila.insertCell(0).innerHTML = '<button class="btn" type="button" onClick="crearGrafico(\''+datos[0].values[i][1]+'\', \'' + datos[0].values[i][4] + '\',1)"></button>';
+        					fila.insertCell(0).innerHTML = '<button class="btn" type="button" onClick="crearGrafico(\''+datos[0].values[i][1]+'\', \'' + datos[0].values[i][3] + '\',2)"></button>';
+        					fila.insertCell(0).innerHTML = '<button class="btn" type="button" onClick="crearGrafico(\''+datos[0].values[i][1]+'\', \'' + datos[0].values[i][2] + '\',3)"></button>';
         					}
         				var fila1 = tabla.insertRow(tabla.length);
         				fila1.insertCell(0).innerHTML = '<button class="bt" type="button" onClick="Evolucion(1)">Evolución del movimieto</button>';
