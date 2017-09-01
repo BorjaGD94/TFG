@@ -100,6 +100,26 @@ io.sockets.on("connection",function(socket){
             db.close();
         }
 
+        if(datos.operacion == "Añadir datos de paciente"){
+            console.log("Paciente a añadir: "+datos.n);
+
+            var filebuffer = fs.readFileSync('./Pacientes_DB.db');
+
+            var db = new SQL.Database(filebuffer);
+
+            db.run("INSERT INTO datos_pacientes VALUES (:id_datos, :Time_ms, :Coronal, :Sagital, :Transversal, :N_Paciente, :Fecha, :max_c, :min_c, :max_s, :min_s, :max_t, :min_t)", {':Time_ms':datos.t1, ':Coronal':datos.c1,':Sagital':datos.s1, ':Transversal':datos.t1, ':N_Paciente':datos.id, ':Fecha':datos.f, ':max_c':datos.mxc, ':min_c':datos.mnc, ':max_s':datos.mxs, ':min_s':datos.mns, ':max_t':datos.mxt, ':min_t':datos.mntr});
+
+            var data = db.export();
+            var buffer = new Buffer(data);
+            fs.writeFileSync("./Pacientes_DB.db", buffer);
+            db.close();
+            var ack_to_client = {
+                data:"El servidor ha datos de un paciente a la db"
+            }
+            socket.send(JSON.stringify(ack_to_client));
+            socket.emit("reload",{});
+          }
+
       });
         /*Sending the Acknowledgement back to the client , this will trigger "message" event on the clients side*/
 

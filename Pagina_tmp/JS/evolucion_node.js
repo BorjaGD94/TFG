@@ -84,7 +84,6 @@ function crearGrafico(time, mov, n){
 
 
 function add_datos(datos,fecha){
-    var id = url1.searchParams.get("var1");
     var Time = [];
     var Coronal = [];
     var Sagital = [];
@@ -110,33 +109,35 @@ function add_datos(datos,fecha){
     var s = Sagital.join();
     var tr = Transversal.join();
 
-    console.log(max_c);
-    console.log(min_c);
-    console.log(max_s);
-    console.log(min_s);
-    console.log(max_t);
-    console.log(min_tr);
+    var socket = io.connect("http://127.0.0.1:8124"); 
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://127.0.0.1:8080/Pacientes_DB.db', true);
-    //xhr.open('GET', './../Pacientes_DB.db', true);
-    xhr.responseType = 'arraybuffer';
-    //console.log(nombre, apellido);
+    socket.on("message",function(message){  
+        console.log("El servidor ha recibido los datos");
+        message = JSON.parse(message);
+        console.log(message); /*converting the data into JS object */
+        /*appending the data on the page using Jquery */
+    });
 
-    xhr.onload = function(e) {
-
-        var uInt8Array = new Uint8Array(this.response);
-        var db = new SQL.Database(uInt8Array);
-        var id = url1.searchParams.get("var1");
-        
-        db.run("INSERT INTO datos_pacientes VALUES (:Time_ms, :Coronal, :Sagital, :Transversal, :N_Paciente, :Fecha, :max_c, :min_c, :max_s, :min_s, :max_t, :min_t)", {':Time_ms':t, ':Coronal':c,':Sagital':s, ':Transversal':tr, ':N_Paciente':id, ':Fecha':fecha, ':max_c':max_c, ':min_c':min_c, ':max_s':max_s, ':min_s':min_s, ':max_t':max_t, ':min_t':min_tr});
-
-        var contents = db.exec("SELECT * FROM datos_pacientes");
-        
-        console.log(contents);
-
-    };
-    xhr.send(); 
+     var datos3 = {
+            operacion: "Añadir datos de paciente",
+            id: url1.searchParams.get("var1"),  /*creating a Js ojbect to be sent to the server*/ 
+            n: url1.searchParams.get("var2"),
+            t1: t,
+            c1: c,
+            s1: s,
+            t1: tr,
+            mxc: max_c,
+            mnc: min_c,
+            mxt: max_t,
+            mntr: min_tr,
+            mxs: max_s,
+            mns: min_s,
+            f: fecha 
+    }
+    socket.send(JSON.stringify(datos3));
+    socket.on("reload", function (data) {
+        location.reload();
+    });
 
 }
 
