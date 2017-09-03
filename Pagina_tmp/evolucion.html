@@ -102,7 +102,7 @@
 						for(i=0; i<(datos[0].values.length); i++){
         					var filas = tabla.rows.length;
         					var fila = tabla.insertRow(filas);
-                  fila.insertCell(0).innerHTML = '<button class="btn_borrar" type="button" onClick="borrar_datos('+id+')"></button>';
+                  fila.insertCell(0).innerHTML = '<button class="btn_borrar" type="button" onClick="borrar_datos('+datos[0].values[i][0]+','+nombre+')"></button>';
         					fila.insertCell(0).innerHTML = datos[0].values[i][6].substring(0,10)+" "+datos[0].values[i][6].substring(11,16);
         					fila.insertCell(0).innerHTML = '<button class="btn" type="button" onClick="crearGrafico(\''+datos[0].values[i][1]+'\', \'' + datos[0].values[i][4] + '\',1)"></button>';
         					fila.insertCell(0).innerHTML = '<button class="btn" type="button" onClick="crearGrafico(\''+datos[0].values[i][1]+'\', \'' + datos[0].values[i][3] + '\',2)"></button>';

@@ -31,10 +31,12 @@ function get_paciente_node(callback){
 }
 
 function borrar_paciente(N_p,nombre){
-    var socket = io.connect("http://127.0.0.1:8124"); 
+	var y = confirm("¿Esta seguro de que quiere borrar a este paciente?. Al eliminar un paciente borrara todos sus datos asociados.");
+    if (y == true){
+    	var socket = io.connect("http://127.0.0.1:8124"); 
 
             socket.on("message",function(message){  
-                console.log("El servidor ha recibido la petición para borrar al paciente");
+                console.log("El servidor ha recibido la petición para borrar los datos del paciente");
                 message = JSON.parse(message);
                 console.log(message); /*converting the data into JS object */
                     /*appending the data on the page using Jquery */
@@ -49,6 +51,10 @@ function borrar_paciente(N_p,nombre){
             socket.on("reload", function (data) {
     			location.reload();
 			});
+        }
+        else{
+        console.log("Datos no borrados");
+    }
 }
 
 function datos(id,nombre,apellido,sexo){

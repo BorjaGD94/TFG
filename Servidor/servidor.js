@@ -62,6 +62,7 @@ io.sockets.on("connection",function(socket){
 
             var db = new SQL.Database(filebuffer);
 
+            db.run("DELETE FROM datos_pacientes WHERE N_Paciente="+datos.id);
             db.run("DELETE FROM pacientes WHERE id="+datos.id);
 
             var data = db.export();
@@ -76,7 +77,7 @@ io.sockets.on("connection",function(socket){
         }
 
         if(datos.operacion=="Datos paciente"){
-          console.log("Mostrar datos de: "+datos.nombre);
+          console.log("Mostrar datos de: "+datos.n);
             var filebuffer = fs.readFileSync('./Pacientes_DB.db');
 
             var db = new SQL.Database(filebuffer);
@@ -119,6 +120,25 @@ io.sockets.on("connection",function(socket){
             socket.send(JSON.stringify(ack_to_client));
             socket.emit("reload",{});
           }
+
+        if(datos.operacion=="Borrar datos de paciente"){
+          console.log("Datos de paciente a borrar: "+datos.n);
+            var filebuffer = fs.readFileSync('./Pacientes_DB.db');
+
+            var db = new SQL.Database(filebuffer);
+
+            db.run("DELETE FROM datos_pacientes WHERE id_datos="+datos.id);
+
+            var data = db.export();
+            var buffer = new Buffer(data);
+            fs.writeFileSync("./Pacientes_DB.db", buffer);
+            db.close();
+            var ack_to_client = {
+                data:"El servidor ha eliminado los datos del paciente de la db"
+            }
+            socket.send(JSON.stringify(ack_to_client));
+            socket.emit("reload",{});
+        }
 
       });
         /*Sending the Acknowledgement back to the client , this will trigger "message" event on the clients side*/

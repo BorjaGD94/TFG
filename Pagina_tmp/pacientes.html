@@ -24,9 +24,8 @@
 
 			<table id="miTabla" style="width:90%" align="center">
   				<tr>
-    				<th>ID</th>
     				<th>Nombre</th> 
-    				<th>Apellido</th>
+    				<th>Apellidos</th>
     				<th>Datos</th>
     				<td style="visibility:hidden;" width="30"></td>
   				</tr>
@@ -42,7 +41,6 @@
         						fila.insertCell(0).innerHTML = '<button class="btn" type="button" onClick="datos('+paciente[i][0]+',\'' + paciente[i][1] + '\',\'' + paciente[i][2] + '\',\'' + paciente[i][3] + '\')"></button>';
         						fila.insertCell(0).innerHTML = paciente[i][2];
         						fila.insertCell(0).innerHTML = paciente[i][1];
-        						fila.insertCell(0).innerHTML = paciente[i][0];
         					}
         				});
     				</script>
@@ -52,7 +50,7 @@
 			<p1>Nombre: </p1>
     		<input type="text" id="nombre" placeholder="Nombre del Paciente"><br>
     		<p1>Apellido: </p1>
-    		<input type="text" id="apellido" placeholder="Apellido del Paciente"><br>
+    		<input type="text" id="apellido" placeholder="Apellidos del Paciente"><br>
     		<p1>Sexo:&nbsp;&nbsp;&nbsp;&nbsp; </p1>
     		<input type="radio" name="sexo" value="h" id="sexo1"> Hombre
   			<input type="radio" name="sexo" value="m" id="sexo2"> Mujer<br>

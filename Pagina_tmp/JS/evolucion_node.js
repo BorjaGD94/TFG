@@ -340,16 +340,33 @@ function grafico_evolucion(maximo, minimo, fechas, x, maximo_max, maximo_min, mi
 }
 
 
-/*function borrar_datos(N_p){
+function borrar_datos(N){
     console.log(N_p);
     var r = confirm("¿Esta seguro de que quiere borrar estos datos?");
     if (r == true){
-        console.log("Borrar datos");
+        var socket = io.connect("http://127.0.0.1:8124"); 
+
+            socket.on("message",function(message){  
+                console.log("El servidor ha recibido la petición para borrar al paciente");
+                message = JSON.parse(message);
+                console.log(message); /*converting the data into JS object */
+                    /*appending the data on the page using Jquery */
+            });
+
+            var data = { /*creating a Js ojbect to be sent to the server*/
+                operacion: "Borrar daotos de paciente", 
+                id: N, /*getting the text input data      */    
+                n: url1.searchParams.get("var2")         
+            }
+            socket.send(JSON.stringify(data));
+            socket.on("reload", function (data) {
+                location.reload();
+            });
     }
     else{
         console.log("Datos no borrados");
     }
-}*/
+}
 
 
 
