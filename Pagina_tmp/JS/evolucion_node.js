@@ -254,22 +254,22 @@ function grafico_evolucion(maximo, minimo, fechas, x, maximo_max, maximo_min, mi
     labels: fechas,
     datasets: [
         {
-            label: "",
+            label: titulo1+" max",
             fill:'end',
             data:maximo_max,
         },
         {
-            label: "",
+            label: titulo1+" min",
             fill:true,
             data:maximo_min,
         },
         {
-            label: "",
+            label: titulo2+" max",
             fill:'bottom',
             data:minimo_max,
         },
         {
-            label: "",
+            label: titulo2+" min",
             fill:true,
             data:minimo_min,
         },

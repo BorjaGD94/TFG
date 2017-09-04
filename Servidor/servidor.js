@@ -82,7 +82,8 @@ io.sockets.on("connection",function(socket){
 
             var db = new SQL.Database(filebuffer);
 
-            var datos_paciente = db.exec("SELECT * FROM datos_pacientes WHERE N_PACIENTE ="+datos.id);
+            //var datos_paciente = db.exec("SELECT * FROM datos_pacientes WHERE N_PACIENTE ="+datos.id);
+            var datos_paciente = db.exec("SELECT * FROM datos_pacientes WHERE N_Paciente = "+datos.id+" ORDER BY datetime(FECHA) asc LIMIT (select count() from datos_pacientes)");
 
             socket.emit("datos_paciente",datos_paciente);
 
@@ -95,7 +96,8 @@ io.sockets.on("connection",function(socket){
 
             var db = new SQL.Database(filebuffer);
 
-            var datos_evolucion_paciente = db.exec("SELECT max_c, min_c, max_s, min_s, max_t, min_t, Fecha FROM datos_pacientes WHERE N_PACIENTE ="+datos.id);
+            //var datos_evolucion_paciente = db.exec("SELECT max_c, min_c, max_s, min_s, max_t, min_t, Fecha FROM datos_pacientes WHERE N_PACIENTE ="+datos.id);
+            var datos_evolucion_paciente = db.exec("SELECT max_c, min_c, max_s, min_s, max_t, min_t, Fecha FROM datos_pacientes WHERE N_PACIENTE ="+datos.id+" ORDER BY datetime(FECHA) asc LIMIT (select count() from datos_pacientes)");
 
             socket.emit("datos_evolucion_paciente",datos_evolucion_paciente);
             db.close();
@@ -109,7 +111,7 @@ io.sockets.on("connection",function(socket){
             var db = new SQL.Database(filebuffer);
 
             db.run("INSERT INTO datos_pacientes VALUES (:id_datos, :Time_ms, :Coronal, :Sagital, :Transversal, :N_Paciente, :Fecha, :max_c, :min_c, :max_s, :min_s, :max_t, :min_t)", {':Time_ms':datos.t1, ':Coronal':datos.c1,':Sagital':datos.s1, ':Transversal':datos.t1, ':N_Paciente':datos.id, ':Fecha':datos.f, ':max_c':datos.mxc, ':min_c':datos.mnc, ':max_s':datos.mxs, ':min_s':datos.mns, ':max_t':datos.mxt, ':min_t':datos.mntr});
-
+            db.run("")
             var data = db.export();
             var buffer = new Buffer(data);
             fs.writeFileSync("./Pacientes_DB.db", buffer);
