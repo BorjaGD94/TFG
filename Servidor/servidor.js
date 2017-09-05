@@ -8,11 +8,13 @@ var SQL = require('./sql.js');
  
 var app = express();
 app.use(express.static('./../pagina_tmp'));
+//app.use(express.static('http://192.168.1.40/../pagina_tmp'));
 //Specifying the public folder of the server to make the html accesible using the static middleware
  
-var server = http.createServer(app).listen(8124, function(){
+var server = http.createServer(app).listen(8124, '192.168.1.40');
+/*function(){
   console.log("Servidor corriendo en http://127.0.0.1:8124");
-});
+});*/
 //Server listens on the port 8124
 io = io.listen(server); 
 /*initializing the websockets communication , server instance has to be sent as the argument */
@@ -53,7 +55,7 @@ io.sockets.on("connection",function(socket){
                 data:"El servidor ha añadido un paciente a la db"
             }
             socket.send(JSON.stringify(ack_to_client));
-            socket.emit("reload",{});
+            io.sockets.emit("reload",{});
           }
 
         if(datos.operacion=="Borrar paciente"){
@@ -73,7 +75,7 @@ io.sockets.on("connection",function(socket){
                 data:"El servidor ha eliminado un paciente de la db"
             }
             socket.send(JSON.stringify(ack_to_client));
-            socket.emit("reload",{});
+            io.sockets.emit("reload",{});
         }
 
         if(datos.operacion=="Datos paciente"){
@@ -111,7 +113,6 @@ io.sockets.on("connection",function(socket){
             var db = new SQL.Database(filebuffer);
 
             db.run("INSERT INTO datos_pacientes VALUES (:id_datos, :Time_ms, :Coronal, :Sagital, :Transversal, :N_Paciente, :Fecha, :max_c, :min_c, :max_s, :min_s, :max_t, :min_t)", {':Time_ms':datos.t1, ':Coronal':datos.c1,':Sagital':datos.s1, ':Transversal':datos.t1, ':N_Paciente':datos.id, ':Fecha':datos.f, ':max_c':datos.mxc, ':min_c':datos.mnc, ':max_s':datos.mxs, ':min_s':datos.mns, ':max_t':datos.mxt, ':min_t':datos.mntr});
-            db.run("")
             var data = db.export();
             var buffer = new Buffer(data);
             fs.writeFileSync("./Pacientes_DB.db", buffer);
@@ -120,7 +121,7 @@ io.sockets.on("connection",function(socket){
                 data:"El servidor ha datos de un paciente a la db"
             }
             socket.send(JSON.stringify(ack_to_client));
-            socket.emit("reload",{});
+            io.sockets.emit("reload",{});
           }
 
         if(datos.operacion=="Borrar datos de paciente"){
@@ -139,7 +140,7 @@ io.sockets.on("connection",function(socket){
                 data:"El servidor ha eliminado los datos del paciente de la db"
             }
             socket.send(JSON.stringify(ack_to_client));
-            socket.emit("reload",{});
+            io.sockets.emit("reload",{});
         }
 
       });

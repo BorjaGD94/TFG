@@ -1,6 +1,11 @@
+var socket = io.connect("http://192.168.1.40:8124"); 
+socket.on("reload", function (data) {
+        location.reload();
+    });
 
 function get_datos_node(id_p, callback){
-    var socket = io.connect("http://127.0.0.1:8124"); 
+    //var socket = io.connect("http://127.0.0.1:8124");
+    var socket = io.connect("http://192.168.1.40:8124");  
 
     socket.on("message",function(message){  
         console.log("El servidor ha recibido la solicitud");
@@ -109,7 +114,8 @@ function add_datos(datos,fecha){
     var s = Sagital.join();
     var tr = Transversal.join();
 
-    var socket = io.connect("http://127.0.0.1:8124"); 
+    //var socket = io.connect("http://127.0.0.1:8124");
+    var socket = io.connect("http://192.168.1.40:8124");  
 
     socket.on("message",function(message){  
         console.log("El servidor ha recibido los datos");
@@ -135,14 +141,12 @@ function add_datos(datos,fecha){
             f: fecha 
     }
     socket.send(JSON.stringify(datos3));
-    socket.on("reload", function (data) {
-        location.reload();
-    });
 
 }
 
 function Evolucion(move){
-    var socket = io.connect("http://127.0.0.1:8124"); 
+    //var socket = io.connect("http://127.0.0.1:8124"); 
+    var socket = io.connect("http://192.168.1.40:8124"); 
 
     socket.on("message",function(message){  
         console.log("El servidor ha recibido la solicitud");
@@ -344,7 +348,8 @@ function borrar_datos(N_p){
     console.log(N_p);
     var r = confirm("¿Esta seguro de que quiere borrar estos datos?");
     if (r == true){
-        var socket = io.connect("http://127.0.0.1:8124"); 
+        //var socket = io.connect("http://127.0.0.1:8124");
+        var socket = io.connect("http://192.168.1.40:8124");  
 
             socket.on("message",function(message){  
                 console.log("El servidor ha recibido la petición para borrar al paciente");
@@ -359,9 +364,6 @@ function borrar_datos(N_p){
                 n: url1.searchParams.get("var2")         
             }
             socket.send(JSON.stringify(data));
-            socket.on("reload", function (data) {
-                location.reload();
-            });
     }
     else{
         console.log("Datos no borrados");
