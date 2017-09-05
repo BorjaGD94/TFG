@@ -340,7 +340,7 @@ function grafico_evolucion(maximo, minimo, fechas, x, maximo_max, maximo_min, mi
 }
 
 
-function borrar_datos(N){
+function borrar_datos(N_p){
     console.log(N_p);
     var r = confirm("¿Esta seguro de que quiere borrar estos datos?");
     if (r == true){
@@ -354,8 +354,8 @@ function borrar_datos(N){
             });
 
             var data = { /*creating a Js ojbect to be sent to the server*/
-                operacion: "Borrar daotos de paciente", 
-                id: N, /*getting the text input data      */    
+                operacion: "Borrar datos de paciente", 
+                id: N_p, /*getting the text input data      */    
                 n: url1.searchParams.get("var2")         
             }
             socket.send(JSON.stringify(data));
