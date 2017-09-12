@@ -11,7 +11,7 @@ app.use(express.static('./../pagina_tmp'));
 //app.use(express.static('http://192.168.1.40/../pagina_tmp'));
 //Specifying the public folder of the server to make the html accesible using the static middleware
  
-var server = http.createServer(app).listen(8124, '192.168.1.40');
+var server = http.createServer(app).listen(8124, '127.0.0.1');
 /*function(){
   console.log("Servidor corriendo en http://127.0.0.1:8124");
 });*/
