@@ -8,37 +8,28 @@ var SQL = require('./sql.js');
  
 var app = express();
 app.use(express.static('./../pagina_tmp'));
-//app.use(express.static('http://192.168.1.40/../pagina_tmp'));
-//Specifying the public folder of the server to make the html accesible using the static middleware
+
  
-var server = http.createServer(app).listen(8124, '127.0.0.1');
-/*function(){
-  console.log("Servidor corriendo en http://127.0.0.1:8124");
-});*/
-//Server listens on the port 8124
+var server = http.createServer(app).listen(8124, '192.168.1.41');
 io = io.listen(server); 
-/*initializing the websockets communication , server instance has to be sent as the argument */
+
  
 io.sockets.on("connection",function(socket){
 
-    var filebuffer = fs.readFileSync('./Pacientes_DB.db');
-    var db = new SQL.Database(filebuffer);
-    var pacientes = db.exec("SELECT * FROM pacientes");
-    socket.emit('pacientes', pacientes[0].values);
-    db.close();
-
-    /*Associating the callback function to be executed when client visits the page and 
-      websocket connection is made */
-      
-      var message_to_client = {
-        data:"Conexión establecida con el servidor"
-      }
-      socket.send(JSON.stringify(message_to_client)); 
-      /*sending data to the client , this triggers a message event at the client side */
-      console.log('Socket.io Conexión establecida con el cliente');
       socket.on("message",function(info){
         datos = JSON.parse(info);
         /*This event is triggered at the server side when client sends the data using socket.send() method */
+        if (datos.operacion == "Pacientes"){
+            console.log("Obtener lista de pacientes");
+
+            var filebuffer = fs.readFileSync('./Pacientes_DB.db');
+            var db = new SQL.Database(filebuffer);
+            var pacientes = db.exec("SELECT * FROM pacientes");
+
+            socket.emit("pacientes",pacientes[0].values);
+
+            db.close();
+        }
         if(datos.operacion == "Añadir paciente"){
             console.log("Paciente a añadir: "+datos.n);
             var filebuffer = fs.readFileSync('./Pacientes_DB.db');
@@ -46,7 +37,7 @@ io.sockets.on("connection",function(socket){
             var db = new SQL.Database(filebuffer);
 
             db.run("INSERT INTO pacientes VALUES (:id, :nombre, :apellido, :sexo)", {':nombre':datos.n, ':apellido':datos.a,':sexo':datos.s});
-            db.run("VACUUM;");
+
             var data = db.export();
             var buffer = new Buffer(data);
             fs.writeFileSync("./Pacientes_DB.db", buffer);
