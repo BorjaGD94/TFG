@@ -2,6 +2,7 @@ var socket = io.connect("http://192.168.1.41:8124");
 socket.on("reload", function (data) {
     	location.reload();
 	});
+
 function save_paciente(nombre, apellido, sexo){
 	//var socket = io.connect("http://192.168.1.41:8124"); 
 	var socket = io.connect("http://192.168.1.41:8124"); 
@@ -29,8 +30,7 @@ function get_paciente_node(callback){
     socket.on("message",function(message){  
         console.log("El servidor ha recibido la solicitud");
         message = JSON.parse(message);
-        console.log(message); /*converting the data into JS object */
-        /*appending the data on the page using Jquery */
+        console.log(message); 
     });
 
      var datos5 = {

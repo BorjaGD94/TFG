@@ -18,7 +18,7 @@ io.sockets.on("connection",function(socket){
 
       socket.on("message",function(info){
         datos = JSON.parse(info);
-        /*This event is triggered at the server side when client sends the data using socket.send() method */
+
         if (datos.operacion == "Pacientes"){
             console.log("Obtener lista de pacientes");
 
@@ -30,6 +30,7 @@ io.sockets.on("connection",function(socket){
 
             db.close();
         }
+
         if(datos.operacion == "Añadir paciente"){
             console.log("Paciente a añadir: "+datos.n);
             var filebuffer = fs.readFileSync('./Pacientes_DB.db');
