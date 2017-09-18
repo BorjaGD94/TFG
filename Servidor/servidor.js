@@ -10,13 +10,19 @@ var app = express();
 app.use(express.static('./../pagina_tmp'));
 
  
-var server = http.createServer(app).listen(8124, '192.168.1.41');
+var server = http.createServer(app).listen(8124, '138.100.223.175');
 io = io.listen(server); 
 
  
 io.sockets.on("connection",function(socket){
 
-      socket.on("message",function(info){
+    var message_to_client = {
+        data:"Conexión establecida con el servidor"
+      }
+    socket.send(JSON.stringify(message_to_client));
+
+    socket.on("message",function(info){
+
         datos = JSON.parse(info);
 
         if (datos.operacion == "Pacientes"){

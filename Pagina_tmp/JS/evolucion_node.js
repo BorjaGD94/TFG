@@ -1,14 +1,14 @@
-var socket = io.connect("http://192.168.1.41:8124"); 
+var socket = io.connect("http://138.100.223.175:8124"); 
 socket.on("reload", function (data) {
         location.reload();
     });
 
 function get_datos_node(id_p, callback){
-    //var socket = io.connect("http://192.168.1.41:8124");
-    var socket = io.connect("http://192.168.1.41:8124");  
+    //var socket = io.connect("http://138.100.223.175:8124");
+    var socket = io.connect("http://138.100.223.175:8124");  
 
     socket.on("message",function(message){  
-        console.log("El servidor ha recibido la solicitud");
+        console.log("El servidor ha enviado un mensaje:");
         message = JSON.parse(message);
         console.log(message); /*converting the data into JS object */
         /*appending the data on the page using Jquery */
@@ -114,11 +114,11 @@ function add_datos(datos,fecha){
     var s = Sagital.join();
     var tr = Transversal.join();
 
-    //var socket = io.connect("http://192.168.1.41:8124");
-    var socket = io.connect("http://192.168.1.41:8124");  
+    //var socket = io.connect("http://138.100.223.175:8124");
+    var socket = io.connect("http://138.100.223.175:8124");  
 
     socket.on("message",function(message){  
-        console.log("El servidor ha recibido los datos");
+        console.log("El servidor ha enviado un mensaje:");
         message = JSON.parse(message);
         console.log(message); /*converting the data into JS object */
         /*appending the data on the page using Jquery */
@@ -145,11 +145,11 @@ function add_datos(datos,fecha){
 }
 
 function Evolucion(move){
-    //var socket = io.connect("http://192.168.1.41:8124"); 
-    var socket = io.connect("http://192.168.1.41:8124"); 
+    //var socket = io.connect("http://138.100.223.175:8124"); 
+    var socket = io.connect("http://138.100.223.175:8124"); 
 
     socket.on("message",function(message){  
-        console.log("El servidor ha recibido la solicitud");
+        console.log("El servidor ha enviado un mensaje:");
         message = JSON.parse(message);
         console.log(message); /*converting the data into JS object */
         /*appending the data on the page using Jquery */
@@ -348,11 +348,11 @@ function borrar_datos(N_p){
     console.log(N_p);
     var r = confirm("¿Esta seguro de que quiere borrar estos datos?");
     if (r == true){
-        //var socket = io.connect("http://192.168.1.41:8124");
-        var socket = io.connect("http://192.168.1.41:8124");  
+        //var socket = io.connect("http://138.100.223.175:8124");
+        var socket = io.connect("http://138.100.223.175:8124");  
 
             socket.on("message",function(message){  
-                console.log("El servidor ha recibido la petición para borrar al paciente");
+                console.log("El servidor ha enviado un mensaje:");
                 message = JSON.parse(message);
                 console.log(message); /*converting the data into JS object */
                     /*appending the data on the page using Jquery */
