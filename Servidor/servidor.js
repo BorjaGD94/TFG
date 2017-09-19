@@ -22,7 +22,6 @@ io.sockets.on("connection",function(socket){
     socket.send(JSON.stringify(message_to_client));
 
     socket.on("message",function(info){
-
         datos = JSON.parse(info);
 
         if (datos.operacion == "Pacientes"){
@@ -82,7 +81,6 @@ io.sockets.on("connection",function(socket){
 
             var db = new SQL.Database(filebuffer);
 
-            //var datos_paciente = db.exec("SELECT * FROM datos_pacientes WHERE N_PACIENTE ="+datos.id);
             var datos_paciente = db.exec("SELECT * FROM datos_pacientes WHERE N_Paciente = "+datos.id+" ORDER BY datetime(FECHA) asc LIMIT (select count() from datos_pacientes)");
 
             socket.emit("datos_paciente",datos_paciente);
