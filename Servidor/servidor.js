@@ -10,7 +10,7 @@ var app = express();
 app.use(express.static('./../pagina_tmp'));
 
  
-var server = http.createServer(app).listen(8124, '138.100.223.175');
+var server = http.createServer(app).listen(8124, '138.100.212.116');
 io = io.listen(server); 
 
  
@@ -114,7 +114,7 @@ io.sockets.on("connection",function(socket){
             fs.writeFileSync("./Pacientes_DB.db", buffer);
             db.close();
             var ack_to_client = {
-                data:"El servidor ha datos de un paciente a la db"
+                data:"El servidor ha añadido datos de un paciente a la db"
             }
             socket.send(JSON.stringify(ack_to_client));
             io.sockets.emit("reload",{});

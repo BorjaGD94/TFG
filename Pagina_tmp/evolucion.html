@@ -29,17 +29,17 @@
   					<th>Transversal</th>
   				</tr>
   			</table><br><br>
+      <script type="text/javascript" src="JS/socket.io.js"></script> 
+      <script src="js/papaparse.min.js"></script>
+      <script src="JS/evolucion_node.js"></script>
+      <script src="JS/sql.js"></script>
+      <script src="JS/Chart.js"></script> 
  			<p1 id="paciente_info_1"></p1>
  			<p id="a">Añadir datos del paciente (archivo .csv y fecha de medicion)</p>
   			<p1 id ="a1">Archivo:</p1><br>
   			<input id="csv" type="file" accept=".csv"><br>
   			<p1 id="a2">Fecha:</p1><br>
   			<input type="datetime-local" id="miFecha"><br>
-        <script type="text/javascript" src="JS/socket.io.js"></script> 
-  			<script src="js/papaparse.min.js"></script>
-  			<script src="JS/evolucion_node.js"></script>
-        <script src="JS/sql.js"></script>
-        <script src="JS/Chart.js"></script> 
   			<button id="boton_x" type="button">Añadir datos</button>
   			<script type="text/javascript">
   				var Boton_pres = document.getElementById("boton_x");
@@ -60,7 +60,6 @@
                 			}
             			});
         			};
-        			// start reading the file. When it is done, calls the onload event defined above.
         			if (fileInput.files[0] instanceof Blob){
         				reader.readAsBinaryString(fileInput.files[0]);
         			}

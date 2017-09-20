@@ -1,22 +1,20 @@
-var socket = io.connect("http://138.100.223.175:8124"); 
+var socket = io.connect("http://138.100.212.116:8124"); 
 socket.on("reload", function (data) {
         location.reload();
     });
 
 function get_datos_node(id_p, callback){
-    //var socket = io.connect("http://138.100.223.175:8124");
-    var socket = io.connect("http://138.100.223.175:8124");  
+    var socket = io.connect("http://138.100.212.116:8124");  
 
     socket.on("message",function(message){  
         console.log("El servidor ha enviado un mensaje:");
         message = JSON.parse(message);
-        console.log(message); /*converting the data into JS object */
-        /*appending the data on the page using Jquery */
+        console.log(message); 
     });
 
      var datos1 = {
-            operacion: "Datos paciente",  /*creating a Js ojbect to be sent to the server*/ 
-            id: id_p, /*getting the text input data      */
+            operacion: "Datos paciente",  
+            id: id_p, 
             n: nombre            
     }
     socket.send(JSON.stringify(datos1));
@@ -94,6 +92,8 @@ function add_datos(datos,fecha){
     var Sagital = [];
     var Transversal = [];
 
+    console.log(datos);
+
     for(var i = 1; i < datos.length-1; i++){
         Time.push(datos[i][0]);
         Coronal.push(parseFloat(datos[i][1]).toFixed(2));
@@ -114,8 +114,8 @@ function add_datos(datos,fecha){
     var s = Sagital.join();
     var tr = Transversal.join();
 
-    //var socket = io.connect("http://138.100.223.175:8124");
-    var socket = io.connect("http://138.100.223.175:8124");  
+    //var socket = io.connect("http://138.100.212.116:8124");
+    var socket = io.connect("http://138.100.212.116:8124");  
 
     socket.on("message",function(message){  
         console.log("El servidor ha enviado un mensaje:");
@@ -145,8 +145,8 @@ function add_datos(datos,fecha){
 }
 
 function Evolucion(move){
-    //var socket = io.connect("http://138.100.223.175:8124"); 
-    var socket = io.connect("http://138.100.223.175:8124"); 
+    //var socket = io.connect("http://138.100.212.116:8124"); 
+    var socket = io.connect("http://138.100.212.116:8124"); 
 
     socket.on("message",function(message){  
         console.log("El servidor ha enviado un mensaje:");
@@ -348,8 +348,8 @@ function borrar_datos(N_p){
     console.log(N_p);
     var r = confirm("¿Esta seguro de que quiere borrar estos datos?");
     if (r == true){
-        //var socket = io.connect("http://138.100.223.175:8124");
-        var socket = io.connect("http://138.100.223.175:8124");  
+        //var socket = io.connect("http://138.100.212.116:8124");
+        var socket = io.connect("http://138.100.212.116:8124");  
 
             socket.on("message",function(message){  
                 console.log("El servidor ha enviado un mensaje:");
