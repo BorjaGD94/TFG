@@ -1,11 +1,11 @@
-var socket = io.connect("http://138.100.212.116:8124"); 
+var socket = io.connect("http://192.168.1.33:8124"); 
 socket.on("reload", function (data) {
     	location.reload();
 	});
 
 function save_paciente(nombre, apellido, sexo){
-	//var socket = io.connect("http://138.100.212.116:8124"); 
-	var socket = io.connect("http://138.100.212.116:8124"); 
+	//var socket = io.connect("http://192.168.1.33:8124"); 
+	var socket = io.connect("http://192.168.1.33:8124"); 
 
     socket.on("message",function(message){  
         console.log("El servidor ha enviado un mensaje:");
@@ -25,7 +25,7 @@ function save_paciente(nombre, apellido, sexo){
 
 function get_paciente_node(callback){
 
-    var socket = io.connect("http://138.100.212.116:8124");  
+    var socket = io.connect("http://192.168.1.33:8124");  
 
     socket.on("message",function(message){  
         console.log("El servidor ha enviado un mensaje:");
@@ -47,7 +47,7 @@ function borrar_paciente(N_p,nombre){
 	var y = confirm("¿Esta seguro de que quiere borrar a este paciente?. Al eliminar un paciente borrara todos sus datos asociados.");
     if (y == true){
 
-    	var socket = io.connect("http://138.100.212.116:8124");  
+    	var socket = io.connect("http://192.168.1.33:8124");  
 
             socket.on("message",function(message){  
                 console.log("El servidor ha enviado un mensaje:");
@@ -69,7 +69,7 @@ function borrar_paciente(N_p,nombre){
 }
 
 function datos(id,nombre,apellido,sexo){
-	window.location.href = "http://138.100.212.116:8124/../evolucion.html?var1="+id+"&var2="+nombre+"&var3="+apellido+"&var4="+sexo;
+	window.location.href = "http://192.168.1.33:8124/../evolucion.html?var1="+id+"&var2="+nombre+"&var3="+apellido+"&var4="+sexo;
 }
 
 
