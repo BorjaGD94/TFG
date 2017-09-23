@@ -6,12 +6,11 @@ socket.on("reload", function (data) {
 function save_paciente(nombre, apellido, sexo){
 	//var socket = io.connect("http://192.168.1.33:8124"); 
 	var socket = io.connect("http://192.168.1.33:8124"); 
-
+    console.log("Conexíon establecida con el servidor");  
     socket.on("message",function(message){  
         console.log("El servidor ha enviado un mensaje:");
         message = JSON.parse(message);
-        console.log(message.data); /*converting the data into JS object */
-        /*appending the data on the page using Jquery */
+        //console.log(message.data); 
     });
 
      var data = {
@@ -21,23 +20,26 @@ function save_paciente(nombre, apellido, sexo){
             s: sexo               
     }
     socket.send(JSON.stringify(data));
+    console.log("Solicitud para añadir paciente: ("+data.n+" "+data.a+") enviada");
 }
 
 function get_paciente_node(callback){
 
-    var socket = io.connect("http://192.168.1.33:8124");  
+    var socket = io.connect("http://192.168.1.33:8124");
+    console.log("Conexíon establecida con el servidor");  
 
     socket.on("message",function(message){  
-        console.log("El servidor ha enviado un mensaje:");
         message = JSON.parse(message);
-        console.log(message.data); 
+        //console.log(message.data); 
     });
 
      var datos5 = {
             operacion: "Pacientes"         
     }
     socket.send(JSON.stringify(datos5));
+    console.log("Solicitud de listado de pacientes enviada");
     socket.on("pacientes", function (data) {
+        console.log("Lista de pacientes recibida");
         callback(data);
     });
 
@@ -48,20 +50,20 @@ function borrar_paciente(N_p,nombre){
     if (y == true){
 
     	var socket = io.connect("http://192.168.1.33:8124");  
-
+        console.log("Conexíon establecida con el servidor");  
             socket.on("message",function(message){  
                 console.log("El servidor ha enviado un mensaje:");
                 message = JSON.parse(message);
-                console.log(message.data); /*converting the data into JS object */
-                    /*appending the data on the page using Jquery */
+                console.log(message.data); 
             });
 
-            var data = { /*creating a Js ojbect to be sent to the server*/
+            var data = { 
             	operacion: "Borrar paciente", 
-                id: N_p, /*getting the text input data      */    
+                id: N_p,   
                 n: nombre         
             }
             socket.send(JSON.stringify(data));
+            console.log("Solicitud para borrar paciente: ("+data.n+") enviada");
         }
         else{
         console.log("Datos no borrados");
