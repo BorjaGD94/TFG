@@ -8,7 +8,7 @@ var SQL = require('./sql.js');
 var timestamp = require('console-timestamp');
  
 var app = express();
-app.use(express.static('./../pagina_tmp'));
+app.use(express.static('./../pagina_web'));
 
  
 var server = http.createServer(app).listen(8124, '192.168.1.33');
