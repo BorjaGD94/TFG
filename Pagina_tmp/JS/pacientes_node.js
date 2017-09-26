@@ -54,7 +54,7 @@ function borrar_paciente(N_p,nombre){
             socket.on("message",function(message){  
                 console.log("El servidor ha enviado un mensaje:");
                 message = JSON.parse(message);
-                console.log(message.data); 
+                //console.log(message.data); 
             });
 
             var data = { 
