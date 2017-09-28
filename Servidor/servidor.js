@@ -11,7 +11,7 @@ var app = express();
 app.use(express.static('./../pagina_web'));
 
  
-var server = http.createServer(app).listen(8124, '192.168.1.33');
+var server = http.createServer(app).listen(8124, '172.20.10.5');
 io = io.listen(server); 
 
 
