@@ -1,24 +1,26 @@
-var socket = io.connect("http://172.20.10.5:8124"); 
+var socket = io.connect("http://192.168.1.33:8124");
 socket.on("reload", function (data) {
         location.reload();
     });
 
 function get_datos_node(id_p, callback){
-    var socket = io.connect("http://172.20.10.5:8124");  
+    var socket = io.connect("http://192.168.1.33:8124");
+    console.log("Conexíon establecida con el servidor");
 
-    socket.on("message",function(message){  
-        console.log("El servidor ha enviado un mensaje:");
+    socket.on("message",function(message){
         message = JSON.parse(message);
-        console.log(message); 
+        //console.log(message);
     });
 
      var datos1 = {
-            operacion: "Datos paciente",  
-            id: id_p, 
-            n: nombre            
+            operacion: "Datos paciente",
+            id: id_p,
+            n: nombre
     }
     socket.send(JSON.stringify(datos1));
+    console.log("Solicitud de listado de movimientos de "+nombre+" enviada");
     socket.on("datos_paciente", function (data) {
+      console.log("Lista de movimientos de "+nombre+" recibida");
         callback(data);
     });
 }
@@ -83,6 +85,7 @@ function crearGrafico(time, mov, n){
     }
 }
 });
+console.log("Gráfico de movimiento en el plano "+x+" de "+nombre+" "+apellido+" disponible en el navegador");
 }
 
 
@@ -91,8 +94,6 @@ function add_datos(datos,fecha){
     var Coronal = [];
     var Sagital = [];
     var Transversal = [];
-
-    console.log(datos);
 
     for(var i = 1; i < datos.length-1; i++){
         Time.push(datos[i][0]);
@@ -114,19 +115,18 @@ function add_datos(datos,fecha){
     var s = Sagital.join();
     var tr = Transversal.join();
 
-    //var socket = io.connect("http://172.20.10.5:8124");
-    var socket = io.connect("http://172.20.10.5:8124");  
+    var socket = io.connect("http://192.168.1.33:8124");
+    console.log("Conexíon establecida con el servidor");
 
-    socket.on("message",function(message){  
-        console.log("El servidor ha enviado un mensaje:");
+    socket.on("message",function(message){
+        //console.log("El servidor ha enviado un mensaje:");
         message = JSON.parse(message);
-        console.log(message); /*converting the data into JS object */
-        /*appending the data on the page using Jquery */
+        //console.log(message);
     });
 
      var datos3 = {
             operacion: "Añadir datos de paciente",
-            id: url1.searchParams.get("var1"),  /*creating a Js ojbect to be sent to the server*/ 
+            id: url1.searchParams.get("var1"),
             n: url1.searchParams.get("var2"),
             t1: t,
             c1: c,
@@ -138,31 +138,32 @@ function add_datos(datos,fecha){
             mntr: min_tr,
             mxs: max_s,
             mns: min_s,
-            f: fecha 
+            f: fecha
     }
     socket.send(JSON.stringify(datos3));
-
+    console.log("Datos de movimieto de "+datos3.n+" enviados");
 }
 
 function Evolucion(move){
-    //var socket = io.connect("http://172.20.10.5:8124"); 
-    var socket = io.connect("http://172.20.10.5:8124"); 
 
-    socket.on("message",function(message){  
-        console.log("El servidor ha enviado un mensaje:");
+    var socket = io.connect("http://192.168.1.33:8124");
+    console.log("Conexíon establecida con el servidor");
+
+    socket.on("message",function(message){
+        //console.log("El servidor ha enviado un mensaje:");
         message = JSON.parse(message);
-        console.log(message); /*converting the data into JS object */
-        /*appending the data on the page using Jquery */
+        //console.log(message);
     });
 
      var datos2 = {
-            operacion: "Datos de Evolucion paciente",  /*creating a Js ojbect to be sent to the server*/ 
-            id: url1.searchParams.get("var1"), /*getting the text input data      */        
+            operacion: "Datos de Evolucion paciente",
+            id: url1.searchParams.get("var1"),
             n:  url1.searchParams.get("var2")
     }
     socket.send(JSON.stringify(datos2));
+    console.log("Solicitud de datos de evolución de "+datos2.n+" enviada");
     socket.on("datos_evolucion_paciente", function (max_minimo) {
-        
+        console.log("Datos de evolución de "+datos2.n+" recibidos");
         var genero = url1.searchParams.get("var4");
 
         var max = [];
@@ -335,39 +336,38 @@ function grafico_evolucion(maximo, minimo, fechas, x, maximo_max, maximo_min, mi
                     max: 90
                 },
             gridLines: {
-                drawBorder: true, 
+                drawBorder: true,
                 }
         }]
     }
 }
 });
+console.log("Gráfico de Evolución en el plano "+x+" de "+nombre+" "+apellido+" disponible en el navegador");
 }
 
 
 function borrar_datos(N_p,nombre){
     var r = confirm("¿Esta seguro de que quiere borrar estos datos?");
     if (r == true){
-        //var socket = io.connect("http://172.20.10.5:8124");
-        var socket = io.connect("http://172.20.10.5:8124");  
 
-            socket.on("message",function(message){  
-                console.log("El servidor ha enviado un mensaje:");
+        var socket = io.connect("http://192.168.1.33:8124");
+        console.log("Conexíon establecida con el servidor");
+
+            socket.on("message",function(message){
+                //console.log("El servidor ha enviado un mensaje:");
                 message = JSON.parse(message);
-                console.log(message); /*converting the data into JS object */
-                    /*appending the data on the page using Jquery */
+                //console.log(message);
             });
 
-            var data = { /*creating a Js ojbect to be sent to the server*/
-                operacion: "Borrar datos de paciente", 
-                id: N_p, /*getting the text input data      */    
-                n: nombre         
+            var data = {
+                operacion: "Borrar datos de paciente",
+                id: N_p,
+                n: nombre
             }
             socket.send(JSON.stringify(data));
+            console.log("Solicitud para borrar datos de "+data.n+" enviada");
     }
     else{
         console.log("Datos no borrados");
     }
 }
-
-
-

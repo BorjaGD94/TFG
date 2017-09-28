@@ -6,13 +6,13 @@ var fs = require('fs');
 var SQL = require('./sql.js');
 
 var timestamp = require('console-timestamp');
- 
+
 var app = express();
 app.use(express.static('./../pagina_web'));
 
- 
-var server = http.createServer(app).listen(8124, '172.20.10.5');
-io = io.listen(server); 
+
+var server = http.createServer(app).listen(8124, '192.168.1.33');
+io = io.listen(server);
 
 
 io.sockets.on("connection",function(socket){
@@ -52,36 +52,26 @@ io.sockets.on("connection",function(socket){
             fs.writeFileSync("./Pacientes_DB.db", buffer);
             db.close();
             console.log(timestamp('hh:mm:ss:iii')+" Base de datos cerrada");
-            var ack_to_client = {
-                data:"El servidor ha añadido un paciente a la db"
-            }
-            socket.send(JSON.stringify(ack_to_client));
             io.sockets.emit("reload",{});
           }
 
         if(datos.operacion=="Borrar paciente"){
-          console.log(timestamp('hh:mm:ss:iii')+" Paciente a borrar: "+datos.n);
             var filebuffer = fs.readFileSync('./Pacientes_DB.db');
 
             var db = new SQL.Database(filebuffer);
             console.log(timestamp('hh:mm:ss:iii')+" Base de datos abierta");
             db.run("DELETE FROM datos_pacientes WHERE N_Paciente="+datos.id);
             db.run("DELETE FROM pacientes WHERE id="+datos.id);
-            console.log(timestamp('hh:mm:ss:iii')+" Paciente y datos asociados eliminados de la base de datos");
             var data = db.export();
             var buffer = new Buffer(data);
             fs.writeFileSync("./Pacientes_DB.db", buffer);
+            console.log(timestamp('hh:mm:ss:iii')+" Paciente "+datos.n+" y sus datos asociados eliminados de la base de datos");
             db.close();
             console.log(timestamp('hh:mm:ss:iii')+" Base de datos cerrada");
-            var ack_to_client = {
-                data:"El servidor ha eliminado un paciente de la db"
-            }
-            socket.send(JSON.stringify(ack_to_client));
             io.sockets.emit("reload",{});
         }
 
         if(datos.operacion=="Datos paciente"){
-          console.log("Mostrar datos de: "+datos.n);
             var filebuffer = fs.readFileSync('./Pacientes_DB.db');
 
             var db = new SQL.Database(filebuffer);
@@ -89,27 +79,27 @@ io.sockets.on("connection",function(socket){
             var datos_paciente = db.exec("SELECT * FROM datos_pacientes WHERE N_Paciente = "+datos.id+" ORDER BY datetime(FECHA) asc LIMIT (select count() from datos_pacientes)");
 
             socket.emit("datos_paciente",datos_paciente);
+            console.log(timestamp('hh:mm:ss:iii')+" Listado de movimientos de "+datos.n+" enviado al cliente");
 
             db.close();
             console.log(timestamp('hh:mm:ss:iii')+" Base de datos cerrada");
         }
 
         if(datos.operacion=="Datos de Evolucion paciente"){
-          console.log("Mostrar datos de evolucion de: "+datos.n);
             var filebuffer = fs.readFileSync('./Pacientes_DB.db');
 
             var db = new SQL.Database(filebuffer);
             console.log(timestamp('hh:mm:ss:iii')+" Base de datos abierta");
-            //var datos_evolucion_paciente = db.exec("SELECT max_c, min_c, max_s, min_s, max_t, min_t, Fecha FROM datos_pacientes WHERE N_PACIENTE ="+datos.id);
+
             var datos_evolucion_paciente = db.exec("SELECT max_c, min_c, max_s, min_s, max_t, min_t, Fecha FROM datos_pacientes WHERE N_PACIENTE ="+datos.id+" ORDER BY datetime(FECHA) asc LIMIT (select count() from datos_pacientes)");
 
             socket.emit("datos_evolucion_paciente",datos_evolucion_paciente);
+            console.log(timestamp('hh:mm:ss:iii')+" Listado de datos de evolución de movimiento de "+datos.n+" enviado al cliente");
             db.close();
             console.log(timestamp('hh:mm:ss:iii')+" Base de datos cerrada");
         }
 
         if(datos.operacion == "Añadir datos de paciente"){
-            console.log("Paciente a añadir: "+datos.n);
 
             var filebuffer = fs.readFileSync('./Pacientes_DB.db');
 
@@ -119,17 +109,13 @@ io.sockets.on("connection",function(socket){
             var data = db.export();
             var buffer = new Buffer(data);
             fs.writeFileSync("./Pacientes_DB.db", buffer);
+            console.log(timestamp('hh:mm:ss:iii')+" Datos de movimiento de "+datos.n+" guardados en la base de datos");
             db.close();
             console.log(timestamp('hh:mm:ss:iii')+" Base de datos cerrada");
-            var ack_to_client = {
-                data:"El servidor ha añadido datos de un paciente a la db"
-            }
-            socket.send(JSON.stringify(ack_to_client));
             io.sockets.emit("reload",{});
           }
 
         if(datos.operacion=="Borrar datos de paciente"){
-          console.log("Datos de paciente a borrar: "+datos.n);
             var filebuffer = fs.readFileSync('./Pacientes_DB.db');
 
             var db = new SQL.Database(filebuffer);
@@ -139,21 +125,12 @@ io.sockets.on("connection",function(socket){
             var data = db.export();
             var buffer = new Buffer(data);
             fs.writeFileSync("./Pacientes_DB.db", buffer);
+            console.log(timestamp('hh:mm:ss:iii')+" Datos de moviento del paciente "+datos.n+" borrados")
             db.close();
             console.log(timestamp('hh:mm:ss:iii')+" Base de datos cerrada");
-            var ack_to_client = {
-                data:"El servidor ha eliminado los datos del paciente de la db"
-            }
-            socket.send(JSON.stringify(ack_to_client));
             io.sockets.emit("reload",{});
         }
 
       });
 
 });
-
-
-
-
-    
-

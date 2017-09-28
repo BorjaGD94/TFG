@@ -20,7 +20,7 @@
 			<table id="miTabla" style="width:90%">
   				<tr>
     				<th colspan="3">Movimientos</th>
-    				<th rowspan="2">Fecha y Hora</th> 
+    				<th rowspan="2">Fecha y Hora</th>
             <td style="visibility:hidden;" width="30"></td>
   				</tr>
   				<tr>
@@ -29,11 +29,11 @@
   					<th>Transversal</th>
   				</tr>
   			</table><br><br>
-      <script type="text/javascript" src="JS/socket.io.js"></script> 
+      <script type="text/javascript" src="JS/socket.io.js"></script>
       <script src="js/papaparse.min.js"></script>
       <script src="JS/evolucion_node.js"></script>
       <script src="JS/sql.js"></script>
-      <script src="JS/Chart.js"></script> 
+      <script src="JS/Chart.js"></script>
  			<p1 id="paciente_info_1"></p1>
  			<p id="a">Añadir datos del paciente (archivo .csv y fecha de medicion)</p>
   			<p1 id ="a1">Archivo:</p1><br>
@@ -69,7 +69,7 @@
     			};
   				Boton_pres.addEventListener("click",readFile);
   			</script>
-  			<div style="width: 800px;" align="center"> 
+  			<div style="width: 800px;" align="center">
         		<canvas id="lineChart" height="400" width="800"></canvas>
         	</div>
 		<script type="text/javascript">
@@ -111,6 +111,7 @@
         				fila1.insertCell(0).innerHTML = '<button class="bt" type="button" onClick="Evolucion(1)">Evolución del movimieto</button>';
         				fila1.insertCell(0).innerHTML = '<button class="bt" type="button" onClick="Evolucion(2)">Evolución del movimieto</button>';
         				fila1.insertCell(0).innerHTML = '<button class="bt" type="button" onClick="Evolucion(3)">Evolución del movimieto</button>';
+								console.log("Lista de movimietos de "+nombre+" "+apellido+" disponible en el navegador");
 					}
 				});
 			}
